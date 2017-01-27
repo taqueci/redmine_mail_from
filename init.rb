@@ -1,4 +1,5 @@
 require 'redmine'
+require_dependency 'redmine_mail_from/hooks'
 
 Rails.configuration.to_prepare do
   require_dependency 'redmine_mail_from/mailer_model_patch'
