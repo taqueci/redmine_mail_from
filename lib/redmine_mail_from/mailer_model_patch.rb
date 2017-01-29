@@ -15,10 +15,22 @@ module RedmineMailFrom
     def mail_with_patch(headers={}, &block)
       from = Setting.mail_from.dup
 
-      from.gsub!(/%f/, @author.firstname || '')
-      from.gsub!(/%l/, @author.lastname || '')
-      from.gsub!(/%m/, (@author.mail && !@author.pref.hide_mail) ? @author.mail : '')
-      from.gsub!(/%u/, @author.login || '')
+      if @author
+        firstname = @author.firstname || ''
+        lastname  = @author.lastname || ''
+        mail = (@author.mail && !@author.pref.hide_mail) ? @author.mail : ''
+        login = @author.login || ''
+      else
+        firstname = ''
+        lastname  = ''
+        mail      = ''
+        login     = ''
+      end
+
+      from.gsub!(/%f/, firstname)
+      from.gsub!(/%l/, lastname)
+      from.gsub!(/%m/, mail)
+      from.gsub!(/%u/, login)
 
       headers['From'] = from
 
