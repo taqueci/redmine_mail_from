@@ -11,16 +11,24 @@ This plugin adds user name and/or mail address to the "From:" header field of th
 
 Add `%f`, `%l`, `%m` and/or `%u` to the "Emission email address" field under the "Email notifications" tab in Redmine settings.
 
+When a notification is sent, `%f`, `%l`, `%m` and `%u` are replaced with:
 * `%f` - First name
 * `%l` - Last name
 * `%m` - Mail address
 * `%u` - Login name
+
+Multiple mail addresses can be specified by separating with `::`.
+The plugin tries to replace placeholders in the first one.
+If fails, it tries the next one.
 
 ### Exmaple
 
 ![Setting example](doc/img/setting-example.png)
 
 If Axl Rose (a.rose@gnr.com) operates Redmine, the notification is sent with `From: Axl Rose via Redmine <a.rose@gnr.com>`.
+
+The reminder or the notification by anonymous is sent with
+`From: Redmine <no-reply@example.com>`.
 
 ### Notes
 
