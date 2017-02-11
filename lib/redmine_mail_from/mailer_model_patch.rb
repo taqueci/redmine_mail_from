@@ -13,24 +13,35 @@ module RedmineMailFrom
 
   module InstanceMethods
     def mail_with_patch(headers={}, &block)
-      from = Setting.mail_from.dup
 
-      if @author
-        firstname = @author.firstname || ''
-        lastname  = @author.lastname || ''
-        mail = (@author.mail && !@author.pref.hide_mail) ? @author.mail : ''
-        login = @author.login || ''
-      else
-        firstname = ''
-        lastname  = ''
-        mail      = ''
-        login     = ''
+      placeholder = {
+        '%f' => @author ? @author.firstname : nil,
+        '%l' => @author ? @author.lastname : nil,
+        '%m' => (@author && @author.mail && !@author.pref.hide_mail) ?
+        @author.mail : nil,
+        '%u' => @author ? @author.login : nil
+      }
+
+      from = ''
+
+      Setting.mail_from.split(/\s*::\s*/).each do |s|
+        nerr = 0
+
+        placeholder.each do |key, val|
+          next unless s.match(/#{key}/)
+
+          if val.nil?
+            nerr += 1
+          else
+            s.gsub!(/#{key}/, val)
+          end
+        end
+
+        if nerr == 0
+          from = s
+          break
+        end
       end
-
-      from.gsub!(/%f/, firstname)
-      from.gsub!(/%l/, lastname)
-      from.gsub!(/%m/, mail)
-      from.gsub!(/%u/, login)
 
       headers['From'] = from
 
