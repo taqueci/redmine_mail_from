@@ -30,17 +30,14 @@ module RedmineMailFrom
         placeholder.each do |key, val|
           next unless s.match(/#{key}/)
 
-          if val.nil?
-            nerr += 1
-          else
-            s.gsub!(/#{key}/, val)
-          end
+          if val.nil? then nerr += 1 end
+
+          s.gsub!(/#{key}/, val || '')
         end
 
-        if nerr == 0
-          from = s
-          break
-        end
+        from = s
+
+        break if nerr == 0
       end
 
       headers['From'] = from
