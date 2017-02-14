@@ -40,7 +40,16 @@ module RedmineMailFrom
         break if nerr == 0
       end
 
+      host = Setting.host_name.split(/\//).first
+
+      if @issue
+        listid = "<#{@issue.project.identifier}.#{host}>"
+      else
+        listid = "<#{host}>"
+      end
+
       headers['From'] = from
+      headers['List-Id'] = listid
 
       mail_without_patch(headers, &block)
     end
