@@ -40,7 +40,7 @@ module RedmineMailFrom
         break if nerr == 0
       end
 
-      host = Setting.host_name.split(/\//).first
+      host = Setting.host_name.split(/[\/:]/).first
 
       if @issue
         listid = "<#{@issue.project.identifier}.#{host}>"
