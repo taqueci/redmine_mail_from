@@ -10,6 +10,10 @@
 	display: block;
 }
 
+.settings_mail_from_val {
+	margin-right: 0.85em;
+}
+
 #settings_mail_from_add {
 	display: block;
 	padding-top: .25em;
@@ -17,43 +21,39 @@
 </style>
 
 <script type="text/javascript">
-$(function(){
-	var escape_html = function(string) {
-		if(typeof string !== 'string') {
-			return string;
-		}
-
-		return string.replace(/[&'`"<>]/g, function(match) {
-			return {
-				'&': '&amp;',
-				"'": '&#x27;',
-				'`': '&#x60;',
-				'"': '&quot;',
-				'<': '&lt;',
-				'>': '&gt;',
-			}[match]
-		});
-	}
-
+$(function() {
 	var input = function(val) {
 		return window.prompt('<%= l(:setting_mail_from) %>\n(%f: <%= l(:field_firstname) %>, %l: <%= l(:field_lastname) %>, %m: <%= l(:field_mail) %>, %u: <%= l(:field_login) %>)', val);
 	}
 
 	var append = function(val) {
-		$('#settings_mail_from_list').append('<span class="settings_mail_from_item"><input type="checkbox" checked disabled><span class="settings_mail_from_val">' + escape_html(val) + '</span> &nbsp; <a class="icon icon-edit settings_mail_from_edit" href="javascript:void(0)"></a> <a class="icon icon-del settings_mail_from_delete" href="javascript:void(0)"></a></span>');
+		$('#settings_mail_from_list').append(
+			'<span class="settings_mail_from_item">' +
+				'<input type="checkbox" checked disabled>' +
+				'<span class="settings_mail_from_val">' +
+				$('<span>').text(val).html() +
+				'</span>' +
+				'<a class="icon icon-edit settings_mail_from_edit" href="javascript:void(0)"></a>' + ' ' +
+				'<a class="icon icon-del settings_mail_from_delete" href="javascript:void(0)"></a>' +
+				'</span>'
+		);
 	}
 
 	var update = function() {
 		var item = [];
 
-		$('.settings_mail_from_val').each(function(index) {
+		$('#settings_mail_from_list span.settings_mail_from_val').each(function(index) {
 			item.push($(this).text());
 		});
 
 		$('#settings_mail_from').val(item.join(' :: '));
 	}
 
-	$('#settings_mail_from').after('<span id="settings_mail_from_list"></span><span id="settings_mail_from_add"><a class="icon icon-add" href="javascript:void(0)"><%= l(:label_email_address_add) %></a></span><em class="info">%f: <%= l(:field_firstname) %>,&ensp;%l: <%= l(:field_lastname) %>,&ensp;%m: <%= l(:field_mail) %>,&ensp;%u: <%= l(:field_login) %></em>');
+	$('#settings_mail_from').after(
+		'<span id="settings_mail_from_list"></span>' +
+			'<span id="settings_mail_from_add"><a class="icon icon-add" href="javascript:void(0)"><%= l(:label_email_address_add) %></a></span>' +
+			'<em class="info">%f: <%= l(:field_firstname) %>,&ensp;%l: <%= l(:field_lastname) %>,&ensp;%m: <%= l(:field_mail) %>,&ensp;%u: <%= l(:field_login) %></em>'
+	);
 
 	$('#settings_mail_from').val().split(/\s*::\s*/).forEach(function(val, index, ar) {
 		if (val) append(val);
