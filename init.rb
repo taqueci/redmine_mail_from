@@ -8,8 +8,8 @@ end
 Redmine::Plugin.register :redmine_mail_from do
   name 'Redmine Mail From plugin'
   author 'Takeshi Nakamura'
-  description 'Extends mail from filed'
-  version '1.2.0'
+  description 'Extends mail "From:" header fieled'
+  version '1.3.0'
   url 'https://github.com/taqueci/redmine_mail_from'
   author_url 'https://github.com/taqueci'
 end
