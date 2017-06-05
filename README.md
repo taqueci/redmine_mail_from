@@ -19,7 +19,7 @@ When a notification is sent, `%f`, `%l`, `%m` and `%u` are replaced with:
 * `%m` - Mail address
 * `%u` - Login name
 
-Multiple mail addresses can be specified by separating with `::`.
+Multiple emission mail addresses can be specified.
 The plugin tries to replace placeholders in the first one.
 If fails, it tries the next one.
 
