@@ -14,11 +14,15 @@
 	margin-right: .5em;
 }
 
-a.settings_mail_from_edit, a.settings_mail_from_delete {
+span.settings_mail_from_handle,
+a.settings_mail_from_edit,
+a.settings_mail_from_delete {
 	opacity: 0.4;
 }
 
-a.settings_mail_from_edit:hover, a.settings_mail_from_delete:hover {
+span.settings_mail_from_handle:hover,
+a.settings_mail_from_edit:hover,
+a.settings_mail_from_delete:hover {
 	opacity: 1;
 }
 
@@ -41,6 +45,7 @@ $(function() {
 				'<span class="settings_mail_from_val">' +
 				$('<span>').text(val).html() +
 				'</span>' + ' ' +
+				'<span class="sort-handle settings_mail_from_handle"></span>' + ' ' +
 				'<a class="icon-only icon-edit settings_mail_from_edit" href="javascript:void(0)"></a>' + ' ' +
 				'<a class="icon-only icon-del settings_mail_from_delete" href="javascript:void(0)"></a>' +
 				'</span>'
@@ -90,6 +95,12 @@ $(function() {
 	$('#settings_mail_from_list').on('click', 'a.settings_mail_from_delete', function(e) {
 		$(e.currentTarget).parent().remove();
 		update();
+	});
+
+	$('#settings_mail_from_list').sortable({
+		axis: 'y',
+		handle: '.settings_mail_from_handle',
+		update: update
 	});
 });
 </script>
