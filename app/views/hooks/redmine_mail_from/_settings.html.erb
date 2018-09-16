@@ -1,106 +1,106 @@
 <style>
 #settings_mail_from {
-	display: none;
+  display: none;
 }
 
 #settings_mail_from_list {
 }
 
 .settings_mail_from_item {
-	display: block;
+  display: block;
 }
 
 .settings_mail_from_val {
-	margin-right: .5em;
+  margin-right: .5em;
 }
 
 span.settings_mail_from_handle,
 a.settings_mail_from_edit,
 a.settings_mail_from_delete {
-	opacity: 0.4;
+  opacity: 0.4;
 }
 
 span.settings_mail_from_handle:hover,
 a.settings_mail_from_edit:hover,
 a.settings_mail_from_delete:hover {
-	opacity: 1;
+  opacity: 1;
 }
 
 #settings_mail_from_add {
-	display: block;
-	padding-top: .25em;
+  display: block;
+  padding-top: .25em;
 }
 </style>
 
 <script type="text/javascript">
 $(function() {
-	var input = function(val) {
-		return window.prompt('<%= l(:setting_mail_from) %>\n(%f: <%= l(:field_firstname) %>, %l: <%= l(:field_lastname) %>, %m: <%= l(:field_mail) %>, %u: <%= l(:field_login) %>)', val);
-	};
+  var input = function(val) {
+    return window.prompt('<%= l(:setting_mail_from) %>\n(%f: <%= l(:field_firstname) %>, %l: <%= l(:field_lastname) %>, %m: <%= l(:field_mail) %>, %u: <%= l(:field_login) %>)', val);
+  };
 
-	var append = function(val) {
-		$('#settings_mail_from_list').append(
-			'<span class="settings_mail_from_item">' +
-				'<input type="checkbox" checked disabled>' +
-				'<span class="settings_mail_from_val">' +
-				$('<span>').text(val).html() +
-				'</span>' + ' ' +
-				'<span class="sort-handle settings_mail_from_handle"></span>' + ' ' +
-				'<a class="icon-only icon-edit settings_mail_from_edit" href="javascript:void(0)"></a>' + ' ' +
-				'<a class="icon-only icon-del settings_mail_from_delete" href="javascript:void(0)"></a>' +
-				'</span>'
-		);
-	};
+  var append = function(val) {
+    $('#settings_mail_from_list').append(
+      '<span class="settings_mail_from_item">' +
+        '<input type="checkbox" checked disabled>' +
+        '<span class="settings_mail_from_val">' +
+        $('<span>').text(val).html() +
+        '</span>' + ' ' +
+        '<span class="sort-handle settings_mail_from_handle"></span>' + ' ' +
+        '<a class="icon-only icon-edit settings_mail_from_edit" href="javascript:void(0)"></a>' + ' ' +
+        '<a class="icon-only icon-del settings_mail_from_delete" href="javascript:void(0)"></a>' +
+        '</span>'
+    );
+  };
 
-	var update = function() {
-		var item = [];
+  var update = function() {
+    var item = [];
 
-		$('#settings_mail_from_list span.settings_mail_from_val').each(function(index) {
-			item.push($(this).text());
-		});
+    $('#settings_mail_from_list span.settings_mail_from_val').each(function(index) {
+      item.push($(this).text());
+    });
 
-		$('#settings_mail_from').val(item.join(' :: '));
-	};
+    $('#settings_mail_from').val(item.join(' :: '));
+  };
 
-	$('#settings_mail_from').after(
-		'<span id="settings_mail_from_list"></span>' +
-			'<span id="settings_mail_from_add"><a class="icon icon-add" href="javascript:void(0)"><%= l(:label_email_address_add) %></a></span>' +
-			'<em class="info">%f: <%= l(:field_firstname) %>,&ensp;%l: <%= l(:field_lastname) %>,&ensp;%m: <%= l(:field_mail) %>,&ensp;%u: <%= l(:field_login) %></em>'
-	);
+  $('#settings_mail_from').after(
+    '<span id="settings_mail_from_list"></span>' +
+      '<span id="settings_mail_from_add"><a class="icon icon-add" href="javascript:void(0)"><%= l(:label_email_address_add) %></a></span>' +
+      '<em class="info">%f: <%= l(:field_firstname) %>,&ensp;%l: <%= l(:field_lastname) %>,&ensp;%m: <%= l(:field_mail) %>,&ensp;%u: <%= l(:field_login) %></em>'
+  );
 
-	$('#settings_mail_from').val().split(/\s*::\s*/).forEach(function(val, index, ar) {
-		if (val) append(val);
-	});
+  $('#settings_mail_from').val().split(/\s*::\s*/).forEach(function(val, index, ar) {
+    if (val) append(val);
+  });
 
-	$('#settings_mail_from_add a').on('click', function() {
-		var val = input('');
+  $('#settings_mail_from_add a').on('click', function() {
+    var val = input('');
 
-		if (val) {
-			append(val);
-			update();
-		}
-	});
+    if (val) {
+      append(val);
+      update();
+    }
+  });
 
-	$('#settings_mail_from_list').on('click', 'a.settings_mail_from_edit', function(e) {
-		var item = $(e.currentTarget).parent().children('span.settings_mail_from_val');
+  $('#settings_mail_from_list').on('click', 'a.settings_mail_from_edit', function(e) {
+    var item = $(e.currentTarget).parent().children('span.settings_mail_from_val');
 
-		var val = input(item.text());
+    var val = input(item.text());
 
-		if (val) {
-			item.text(val);
-			update();
-		}
-	});
+    if (val) {
+      item.text(val);
+      update();
+    }
+  });
 
-	$('#settings_mail_from_list').on('click', 'a.settings_mail_from_delete', function(e) {
-		$(e.currentTarget).parent().remove();
-		update();
-	});
+  $('#settings_mail_from_list').on('click', 'a.settings_mail_from_delete', function(e) {
+    $(e.currentTarget).parent().remove();
+    update();
+  });
 
-	$('#settings_mail_from_list').sortable({
-		axis: 'y',
-		handle: '.settings_mail_from_handle',
-		update: update
-	});
+  $('#settings_mail_from_list').sortable({
+    axis: 'y',
+    handle: '.settings_mail_from_handle',
+    update: update
+  });
 });
 </script>
