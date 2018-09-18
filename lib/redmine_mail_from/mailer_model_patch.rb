@@ -2,17 +2,7 @@ require_dependency 'mailer'
 
 module RedmineMailFrom
   module MailerModelPatch
-    def self.included(base)
-      base.send(:include, InstanceMethods)
-
-      base.class_eval do
-        alias_method_chain :mail, :patch
-      end
-    end
-  end
-
-  module InstanceMethods
-    def mail_with_patch(headers={}, &block)
+    def mail(headers={}, &block)
 
       placeholder = {
         '%f' => @author ? @author.firstname : nil,
@@ -51,11 +41,7 @@ module RedmineMailFrom
       headers['From'] = from
       headers['List-Id'] = listid
 
-      mail_without_patch(headers, &block)
+      super(headers, &block)
     end
   end
-end
-
-unless Mailer.included_modules.include?(RedmineMailFrom::MailerModelPatch)
-  Mailer.send(:include, RedmineMailFrom::MailerModelPatch)
 end
