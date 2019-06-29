@@ -30,6 +30,10 @@ a.mail-from-delete:hover {
   display: block;
   padding-top: .25em;
 }
+
+.sort-handle.mail-from-handle {
+  width: 0;
+}
 </style>
 
 <script type="text/javascript">
@@ -47,7 +51,7 @@ $(function() {
         '<span class="mail-from-val">' +
         $('<span>').text(val).html() +
         '</span>' + ' ' +
-        '<span class="sort-handle mail-from-handle"></span>' + ' ' +
+        '<span class="icon-only icon-sort-handle sort-handle mail-from-handle"></span>' + ' ' +
         '<a class="icon-only icon-edit mail-from-edit" href="javascript:void(0)"></a>' + ' ' +
         '<a class="icon-only icon-del mail-from-delete" href="javascript:void(0)"></a>' +
         '</span>';
